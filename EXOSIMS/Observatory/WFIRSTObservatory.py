@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from EXOSIMS.Prototypes.Observatory import Observatory
-from astropy import units as u
+import astropy.units as u
 import numpy as np
 
 class WFIRSTObservatory(Observatory):
@@ -9,119 +9,124 @@ class WFIRSTObservatory(Observatory):
     This class contains all variables and methods specific to the WFIRST
     observatory needed to perform Observatory Definition Module calculations
     in exoplanet mission simulation."""
-    
-    def orbit(self, time):
-        """Finds WFIRST geosynchronous circular orbit position vector
+
+    def orbit(self, currentTime):
+        """Finds observatory orbit position vector in heliocentric equatorial frame.
         
-        This method finds the WFIRST geosynchronous circular orbit position 
-        vector as 1D numpy array (astropy Quantity with units of km) in the
-        heliocentric equatorial frame, stores this vector in self.r_sc,
-        and returns True if successful.
+        This method returns the WFIRST geosynchronous circular orbit position vector
+        in the heliocentric equatorial frame.
         
         Args:
-            time (Time):
-                current absolute time (astropy Time)
-            
+            currentTime (astropy Time array):
+                Current absolute mission time in MJD
+        
         Returns:
-            success (bool):
-                True if successful, False if not
+            r_sc (astropy Quantity nx3 array):
+                Observatory (spacecraft) position vector in units of km
         
         """
         
-        pi = np.pi
-        i = 28.5 # orbital inclination in degrees
-        i = np.radians(i)
-        O = 228. # right ascension of the ascending node in degrees
-        O = np.radians(O)
+        i = np.radians(28.5) # orbital inclination in degrees
+        O = np.radians(228.) # right ascension of the ascending node in degrees
         # orbital period is one sidereal day
-        f = 2.*pi # orbital frequency (2*pi/period)
+        f = 2.*np.pi # orbital frequency (2*pi/period)
         r = 42164.*u.km # orbital height in km
-        
         # Find Earth position vector (km in heliocentric equatorial frame)
-        r_earth = self.solarSystem_body_position(time, 'Earth')
-        
+        r_earth = self.solarSystem_body_position(currentTime, 'Earth')
         # Find spacecraft position vector with respect to Earth in orbital plane
-        t = time.mjd - int(time.mjd) # gives percent of day
-        r_scearth = r*np.array([np.cos(f*t), np.sin(f*t), 0.])
+        t = currentTime.mjd - np.floor(currentTime.mjd) # gives percent of day
+        r_scearth = r*np.vstack((np.cos(f*t), np.sin(f*t), np.zeros(t.size)))
+        # position vector wrt Earth in equatorial frame
+        r_scearth = np.dot(np.dot(self.rot(-O,3), self.rot(-i,1)),r_scearth).T
+        # position vector in heliocentric equatorial frame
+        r_sc = r_earth + r_scearth
         
-        # Find spacecraft position vector with respect to Earth in equatorial frame
-        r_scearth = np.dot(np.dot(self.rot(-O,3), self.rot(-i,1)),r_scearth)
+        assert np.all(np.isfinite(r_sc)), 'Observatory position vector r_sc has infinite value.'
         
-        # Find spacecraft position vector with respect to sun (heliocentric equatorial)
-        self.r_sc = r_earth + r_scearth
+        return r_sc.to('km')
+
+    def keepout(self, TL, sInds, currentTime, koangle, returnExtra=False):
+        """Finds keepout Boolean values for stars of interest.
         
-        b = np.isfinite(self.r_sc) # finds if all values are finite floats
-        success = all(b) # returns True if all values of self.r_sc are finite
-        
-        return success
-        
-    def keepout(self, time, catalog, koangle):
-        """Finds keepout Boolean values, returns True if successful
-        
-        This method finds the keepout Boolean values for each target star where
-        True is an observable star and stores the 1D numpy array in self.kogood.
+        This method returns the keepout Boolean values for stars of interest, where
+        True is an observable star.
         
         Args:
-            time (Time):
-                absolute time (astropy Time)
-            catalog (TargetList or StarCatalog):
-                TargetList or StarCatalog class object
-            koangle (float):
-                Telescope keepout angle in degrees
+            TL (TargetList module):
+                TargetList class object
+            sInds (integer ndarray):
+                Integer indices of the stars of interest
+            currentTime (astropy Time array):
+                Current absolute mission time in MJD
+            koangle (astropy Quantity):
+                Telescope keepout angle in units of degree
+            returnExtra (boolean):
+                Optional flag, default False, set True to return additional rates for validation
                 
         Returns:
-            success (bool):
-                True if successful, False if not
+            kogood (boolean ndarray):
+                True is a target unobstructed and observable, and False is a 
+                target unobservable due to obstructions in the keepout zone.
+        
+        Note: If multiple times and targets, currentTime and sInds sizes must match.
         
         """
         
-        # get updated orbital position vector
-        a = self.orbit(time)
+        # check size of arrays
+        sInds = np.array(sInds,ndmin=1)
+        nStars = sInds.size
+        nTimes = currentTime.size
+        nBodies = 11
+        assert nStars==1 or nTimes==1 or nTimes==nStars, 'If multiple times and targets, \
+                currentTime and sInds sizes must match'
         
-        # Find position and unit vectors for list of stars in catalog wrt spacecraft
-        r_targ = [np.zeros((1,3))]*len(catalog.Name) # initialize list of position vectors
-        u_targ = r_targ # initialize list of unit vectors
-        for x in xrange(len(catalog.Name)):
-            r_targ[x] = self.starprop(time, catalog, x) # position vector wrt sun
-            r_targ[x] -= self.r_sc # position vector wrt spacecraft
-            u_targ[x] = r_targ[x]/np.linalg.norm(r_targ[x]) # unit vector wrt spacecraft
-
-        # list of bright object position vectors wrt sun
-        r_bright = [-self.r_sc, # sun
-                    self.solarSystem_body_position(time, 'Mercury'), # Mercury
-                    self.solarSystem_body_position(time, 'Venus'), # Venus
-                    self.solarSystem_body_position(time, 'Earth'), # Earth
-                    self.solarSystem_body_position(time, 'Mars'), # Mars
-                    self.solarSystem_body_position(time, 'Jupiter'), # Jupiter
-                    self.solarSystem_body_position(time, 'Saturn'), # Saturn
-                    self.solarSystem_body_position(time, 'Uranus'), # Uranus
-                    self.solarSystem_body_position(time, 'Neptune'), # Neptune
-                    self.solarSystem_body_position(time, 'Pluto'), # Pluto
-                    self.solarSystem_body_position(time, 'Moon')] # moon
-        u_bright = r_bright # initialize list of unit vectors
-
-        # Find position and unit vectors for bright objects wrt spacecraft    
-        for x in xrange(len(r_bright)):
-            r_bright[x] -= self.r_sc # position vector wrt spacecraft
-            u_bright[x] = r_bright[x]/np.linalg.norm(r_bright[x]) # unit vector
-            
-        # Find angles and make angle comparisons for self.kogood
-        # if bright objects have an angle with the target vector less than 
-        # pi/4 they are in the field of view and the target star may not be
-        # observed, thus ko associated with this target becomes False
-        self.kogood = np.array([True]*len(catalog.Name))
-        for i in xrange(len(catalog.Name)):
-            for j in xrange(len(u_bright)):
-                angle = np.arccos(np.dot(u_targ[i], u_bright[j]))
-                if angle < np.radians(koangle):
-                    self.kogood[i] = False
-                    break
+        # Observatory position
+        r_sc = self.orbit(currentTime)
+        # Position vectors wrt sun, for targets and bright bodies
+        r_targ = self.starprop(TL, sInds, currentTime)
+        r_body = np.array([np.zeros(r_sc.shape), # sun
+            self.solarSystem_body_position(currentTime, 'Moon').to('km').value,
+            self.solarSystem_body_position(currentTime, 'Earth').to('km').value,
+            self.solarSystem_body_position(currentTime, 'Mercury').to('km').value,
+            self.solarSystem_body_position(currentTime, 'Venus').to('km').value,
+            self.solarSystem_body_position(currentTime, 'Mars').to('km').value,
+            self.solarSystem_body_position(currentTime, 'Jupiter').to('km').value,
+            self.solarSystem_body_position(currentTime, 'Saturn').to('km').value,
+            self.solarSystem_body_position(currentTime, 'Uranus').to('km').value,
+            self.solarSystem_body_position(currentTime, 'Neptune').to('km').value,
+            self.solarSystem_body_position(currentTime, 'Pluto').to('km').value])*u.km
+        # position vectors wrt spacecraft
+        r_targ -= r_sc
+        r_body -= r_sc
+        # unit vectors wrt spacecraft
+        u_targ = (r_targ.value.T/np.linalg.norm(r_targ, axis=-1)).T
+        u_body = (r_body.value.T/np.linalg.norm(r_body, axis=-1).T).T
         
-        # check to make sure all elements in self.kogood are Boolean
-        b = [isinstance(element, np.bool_) for element in self.kogood]  
-        c = [a, b]
-        # return True if orbital position is successful and all elements of
-        # self.kogood are Boolean
-        success = all(c)
+        # Create koangles for all bodies, set by telescope keepout angle for brighter 
+        # objects (Sun, Moon, Earth) and defaults to 1 degree for other bodies.
+        koangles = np.ones(nBodies)*koangle
+        koangles[3:] = 1.*u.deg
         
-        return success
+        # Find angles and make angle comparisons to build kogood array.
+        # If bright objects have an angle with the target vector less than koangle 
+        # (e.g. pi/4) they are in the field of view and the target star may not be
+        # observed, thus ko associated with this target becomes False.
+        nkogood = np.maximum(nStars,nTimes)
+        kogood = np.array([True]*nkogood)
+        culprit = np.zeros([nkogood, nBodies])
+        for i in xrange(nkogood):
+            u_b = u_body[:,0,:] if nTimes == 1 else u_body[:,i,:]
+            u_t = u_targ[0,:] if nStars == 1 else u_targ[i,:]
+            angles = np.arccos(np.dot(u_b, u_t))
+            culprit[i,:] = (angles < koangles.to('rad').value)
+            if np.any(culprit[i,:]):
+                kogood[i] = False
+        
+        # check to make sure all elements in kogood are Boolean
+        trues = [isinstance(element, np.bool_) for element in kogood]
+        assert all(trues), 'An element of kogood is not Boolean'
+        
+        if returnExtra:
+            return kogood, r_body, r_targ, culprit
+        else:
+            return kogood

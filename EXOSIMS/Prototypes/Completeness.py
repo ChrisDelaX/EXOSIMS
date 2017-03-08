@@ -12,26 +12,17 @@ class Completeness(object):
         \*\*specs: 
             user specified values
     
-    Attributes:
-        minComp (float): 
-            minimum completeness level for inclusion in target list
-        
     """
 
     _modtype = 'Completeness'
     _outspec = {}
     
-    def __init__(self, minComp=0.1, **specs):
-        # get desired Planet Population module
-        
+    def __init__(self, **specs):
         # import PlanetPopulation class
-        Pop = get_module(specs['modules']['PlanetPopulation'], 'PlanetPopulation')
-        self.PlanetPopulation = Pop(**specs) # planet population object class
-       
-        self.minComp = float(minComp)
-        self._outspec['minComp'] = self.minComp
+        Pop = get_module(specs['modules']['PlanetPopulation'],'PlanetPopulation')(**specs)
+        self.PlanetPopulation = Pop # planet population object class
+        self.PlanetPhysicalModel = Pop.PlanetPhysicalModel
 
-    
     def __str__(self):
         """String representation of Completeness object
         
@@ -39,64 +30,62 @@ class Completeness(object):
         method will return the values contained in the object
         
         """
-
-        atts = self.__dict__.keys()
         
-        for att in atts:
+        for att in self.__dict__.keys():
             print '%s: %r' % (att, getattr(self, att))
         
         return 'Completeness class object attributes'
-        
-    def target_completeness(self, targlist):
+
+    def target_completeness(self, TL):
         """Generates completeness values for target stars
         
         This method is called from TargetList __init__ method.
         
         Args:
-            targlist (TargetList): 
-                TargetList class object which, in addition to TargetList class
-                object attributes, has available:
-                    targlist.OpticalSystem: 
-                        OpticalSystem class object
-                    targlist.PlanetPopulation: 
-                        PlanetPopulation class object
-                    targlist.ZodiacalLight: 
-                        ZodiacalLight class object
-                    targlist.comp: 
-                        Completeness class object
+            TL (TargetList module):
+                TargetList class object
             
         Returns:
-            comp0 (ndarray): 
-                1D numpy array of completeness values for each target star
+            comp0 (float ndarray): 
+                Completeness values for each target star
         
         """
         
-        comp0 = np.array([0.2]*len(targlist.Name))
+        comp0 = np.array([0.2]*TL.nStars)
         
         return comp0
         
-    def completeness_update(self, s_ind, targlist, obsbegin, obsend, nexttime):
+    def gen_update(self, TL):
+        """Generates any information necessary for dynamic completeness 
+        calculations (completeness at successive observations of a star in the
+        target list)
+        
+        Args:
+            TL (TargetList module):
+                TargetList class object
+        
+        """
+        
+        # initialize number of visits per star
+        self.visits = np.array([0]*TL.nStars)
+
+    def completeness_update(self, TL, sInds, dt):
         """Updates completeness value for stars previously observed
         
         Args:
-            s_ind (int):
-                index of star just observed
-            targlist (TargetList):
-                TargetList module
-            obsbegin (Quantity):
-                time of observation begin
-            obsend (Quantity):
-                time of observation end
-            nexttime (Quantity):
-                time of next observational period
+            TL (TargetList module):
+                TargetList class object
+            sInds (integer array):
+                Indices of stars to update
+            dt (astropy Quantity):
+                Time since initial completeness
         
         Returns:
-            comp0 (ndarray):
-                1D numpy ndarray of completeness values for each star in the 
-                target list
+            comp0 (float ndarray):
+                Completeness values for each star
         
         """
         # prototype returns the "virgin" completeness value
-        comp0 = targlist.comp0
+        comp0 = TL.comp0[sInds]
         
         return comp0

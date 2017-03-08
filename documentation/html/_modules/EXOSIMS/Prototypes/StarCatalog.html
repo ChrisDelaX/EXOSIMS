@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>EXOSIMS.Prototypes.StarCatalog &mdash; EXOSIMS 0.1 documentation</title>
+    <title>EXOSIMS.Prototypes.StarCatalog &#8212; EXOSIMS 1.1 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -14,18 +14,19 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1',
+        VERSION:     '1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="EXOSIMS 0.1 documentation" href="../../../index.html" />
-    <link rel="up" title="Module code" href="../../index.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -39,9 +40,10 @@
           <div class="body" role="main">
             
   <h1>Source code for EXOSIMS.Prototypes.StarCatalog</h1><div class="highlight"><pre>
-<span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">SkyCoord</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">astropy.units</span> <span class="k">as</span> <span class="nn">u</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="k">import</span> <span class="n">SkyCoord</span>
 
 <div class="viewcode-block" id="StarCatalog"><a class="viewcode-back" href="../../../EXOSIMS.Prototypes.html#EXOSIMS.Prototypes.StarCatalog.StarCatalog">[docs]</a><span class="k">class</span> <span class="nc">StarCatalog</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Star Catalog class template</span>
@@ -50,66 +52,69 @@
 <span class="sd">    Star Catalog Module calculations in exoplanet mission simulation.</span>
 <span class="sd">    </span>
 <span class="sd">    Attributes:</span>
-<span class="sd">        Name (ndarray):</span>
-<span class="sd">            1D numpy ndarray of star names</span>
-<span class="sd">        Type (ndarray):</span>
-<span class="sd">            1D numpy ndarray of star types</span>
-<span class="sd">        Spec (ndarray):</span>
-<span class="sd">            1D numpy ndarray of spectral types</span>
-<span class="sd">        parx (ndarray):</span>
-<span class="sd">            1D numpy ndarray of parallax in milliarcseconds</span>
-<span class="sd">        Umag (ndarray):</span>
-<span class="sd">            1D numpy ndarray of U magnitude</span>
-<span class="sd">        Bmag (ndarray):</span>
-<span class="sd">            1D numpy ndarray of B magnitude</span>
-<span class="sd">        Vmag (ndarray):</span>
-<span class="sd">            1D numpy ndarray of V magnitude</span>
-<span class="sd">        Rmag (ndarray):</span>
-<span class="sd">            1D numpy ndarray of R magnitude</span>
-<span class="sd">        Imag (ndarray):</span>
-<span class="sd">            1D numpy ndarray of I magnitude</span>
-<span class="sd">        Jmag (ndarray):</span>
-<span class="sd">            1D numpy ndarray of J magnitude</span>
-<span class="sd">        Hmag (ndarray):</span>
-<span class="sd">            1D numpy ndarray of H magnitude</span>
-<span class="sd">        Kmag (ndarray):</span>
-<span class="sd">            1D numpy ndarray of K magnitude</span>
-<span class="sd">        dist (ndarray):</span>
-<span class="sd">            1D numpy ndarray of distance in parsecs to star</span>
-<span class="sd">        BV (ndarray):</span>
-<span class="sd">            1D numpy ndarray of B-V Johnson magnitude</span>
-<span class="sd">        MV (ndarray):</span>
-<span class="sd">            1D numpy ndarray of absolute V magnitude</span>
-<span class="sd">        BC (ndarray):</span>
-<span class="sd">            1D numpy ndarray of bolometric correction</span>
-<span class="sd">        L (ndarray):</span>
-<span class="sd">            1D numpy ndarray of stellar luminosity in Solar luminosities</span>
-<span class="sd">        coords (SkyCoord):</span>
-<span class="sd">            numpy ndarray of astropy SkyCoord objects containing right ascension</span>
-<span class="sd">            and declination in degrees</span>
-<span class="sd">        pmra (ndarray):</span>
-<span class="sd">            1D numpy ndarray of proper motion in right ascension in</span>
-<span class="sd">            milliarcseconds/year</span>
-<span class="sd">        pmdec (ndarray):</span>
-<span class="sd">            1D numpy ndarray of proper motion in declination in </span>
-<span class="sd">            milliarcseconds/year</span>
-<span class="sd">        rv (ndarray):</span>
-<span class="sd">            1D numpy ndarray of radial velocity in km/s</span>
-<span class="sd">        Binary_Cut (ndarray):</span>
-<span class="sd">            1D numpy ndarray of booleans where True is a star with a companion </span>
-<span class="sd">            closer than 10 arcsec</span>
+<span class="sd">        Name (string ndarray):</span>
+<span class="sd">            Star names</span>
+<span class="sd">        Spec (string ndarray):</span>
+<span class="sd">            Star spectral types</span>
+<span class="sd">        Umag (float ndarray):</span>
+<span class="sd">            U magnitude</span>
+<span class="sd">        Bmag (float ndarray):</span>
+<span class="sd">            B magnitude</span>
+<span class="sd">        Vmag (float ndarray):</span>
+<span class="sd">            V magnitude</span>
+<span class="sd">        Rmag (float ndarray):</span>
+<span class="sd">            R magnitude</span>
+<span class="sd">        Imag (float ndarray):</span>
+<span class="sd">            I magnitude</span>
+<span class="sd">        Jmag (float ndarray):</span>
+<span class="sd">            J magnitude</span>
+<span class="sd">        Hmag (float ndarray):</span>
+<span class="sd">            H magnitude</span>
+<span class="sd">        Kmag (float ndarray):</span>
+<span class="sd">            K magnitude</span>
+<span class="sd">        BV (float ndarray):</span>
+<span class="sd">            B-V Johnson magnitude</span>
+<span class="sd">        MV (float ndarray):</span>
+<span class="sd">            Absolute V magnitude</span>
+<span class="sd">        BC (float ndarray):</span>
+<span class="sd">            Bolometric correction</span>
+<span class="sd">        L (float ndarray):</span>
+<span class="sd">            Stellar luminosity in Solar luminosities</span>
+<span class="sd">        Binary_Cut (boolean ndarray):</span>
+<span class="sd">            Booleans where True is a star with a companion closer than 10 arcsec</span>
+<span class="sd">        dist (astropy Quantity array):</span>
+<span class="sd">            Distance to star in units of pc</span>
+<span class="sd">        parx (astropy Quantity array):</span>
+<span class="sd">            Parallax in units of mas</span>
+<span class="sd">        coords (astropy SkyCoord array):</span>
+<span class="sd">            SkyCoord objects containing right ascension, declination, and </span>
+<span class="sd">            distance to star in units of deg, deg, and pc</span>
+<span class="sd">        pmra (astropy Quantity array):</span>
+<span class="sd">            Proper motion in right ascension in units of mas/year</span>
+<span class="sd">        pmdec (astropy Quantity array):</span>
+<span class="sd">            Proper motion in declination in units of mas/year</span>
+<span class="sd">        rv (astropy Quantity array):</span>
+<span class="sd">            Radial velocity in units of km/s</span>
 <span class="sd">        </span>
-<span class="sd">    &quot;&quot;&quot;</span> 
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">_modtype</span> <span class="o">=</span> <span class="s1">&#39;StarCatalog&#39;</span>
     <span class="n">_outspec</span> <span class="o">=</span> <span class="p">{}</span>
-    
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">ntargs</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="o">**</span><span class="n">specs</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ntargs</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">specs</span><span class="p">):</span>
         
+        <span class="c1"># list of astropy attributes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">pc</span> <span class="c1"># distance in parsecs (dist = 1000/parx)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;mas&#39;</span><span class="p">,</span><span class="n">equivalencies</span><span class="o">=</span><span class="n">u</span><span class="o">.</span><span class="n">parallax</span><span class="p">())</span> <span class="c1"># parallax in milliarcseconds</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coords</span> <span class="o">=</span> <span class="n">SkyCoord</span><span class="p">(</span><span class="n">ra</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">deg</span><span class="p">,</span> <span class="n">dec</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">deg</span><span class="p">,</span> \
+                <span class="n">distance</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dist</span><span class="p">)</span> <span class="c1"># right ascension and declination in degrees</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pmra</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">mas</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">yr</span> <span class="c1"># proper motion in right ascension in milliarcseconds/year</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pmdec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">mas</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">yr</span> <span class="c1"># proper motion in declination in milliarcseconds/year</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">km</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">s</span> <span class="c1"># radial velocity in kilometers/second</span>
+        
+        <span class="c1"># list of non-astropy attributes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Name</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span> <span class="c1"># list of star names</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Type</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span> <span class="c1"># list of star types</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Spec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span> <span class="c1"># list of spectral types</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">parx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span> <span class="c1"># list of parallax in milliarcseconds</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Umag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span> <span class="c1"># list of U magnitude</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Bmag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span> <span class="c1"># list of B magnitude</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Vmag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span> <span class="c1"># list of V magnitude</span>
@@ -118,31 +123,22 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">Jmag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span> <span class="c1"># list of J magnitude</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Hmag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span> <span class="c1"># list of H magnitude</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Kmag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span> <span class="c1"># list of K magnitude</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span> <span class="c1"># list of distance in parsecs (dist = 1000/parx)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">BV</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span> <span class="c1"># list of B-V Johnson magnitude</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">MV</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span> <span class="c1"># list of absolute V magnitude (MV = -5 * log(1000/parx) + 5 - Vmag) </span>
         <span class="bp">self</span><span class="o">.</span><span class="n">BC</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span> <span class="c1"># list of bolometric correction</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span> <span class="c1"># list of stellar luminosity in Solar luminosities</span>
-        <span class="c1"># list of astropy SkyCoord objects of right ascension and declination in degrees        </span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">coords</span> <span class="o">=</span> <span class="n">SkyCoord</span><span class="p">(</span><span class="n">ra</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">),</span> <span class="n">dec</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">),</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;deg&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pmra</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span> <span class="c1"># list of proper motion in right ascension in milliarcseconds/year</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pmdec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span> <span class="c1"># list of proper motion in declination in milliarcseconds/year</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">)</span> <span class="c1"># list of radial velocity in kilometers/second</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Binary_Cut</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntargs</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span> <span class="c1"># boolean list where True is companion closer than 10 arcsec</span>
-                
-        
-<div class="viewcode-block" id="StarCatalog.__str__"><a class="viewcode-back" href="../../../EXOSIMS.Prototypes.html#EXOSIMS.Prototypes.StarCatalog.StarCatalog.__str__">[docs]</a>    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;String representation of the StarCatalog object</span>
 <span class="sd">        </span>
 <span class="sd">        When the command &#39;print&#39; is used on the StarCatalog object, this method</span>
 <span class="sd">        will return the values contained in the object&quot;&quot;&quot;</span>
-
-        <span class="n">atts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
         
-        <span class="k">for</span> <span class="n">att</span> <span class="ow">in</span> <span class="n">atts</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">: </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">att</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">att</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">att</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="nb">print</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">: </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">att</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">att</span><span class="p">))</span>
         
-        <span class="k">return</span> <span class="s1">&#39;Star Catalog class object attributes&#39;</span></div></div>
+        <span class="k">return</span> <span class="s1">&#39;Star Catalog class object attributes&#39;</span></div>
 </pre></div>
 
           </div>
@@ -161,14 +157,11 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -176,10 +169,10 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2015, SIOSlab.
+      &copy;2015 - 2017, SIOSlab.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
       
     </div>

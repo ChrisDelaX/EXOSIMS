@@ -22,6 +22,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+_build/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -65,3 +66,19 @@ target/
 *.synctex.gz
 *.toc
 
+#Mac
+.DS_Store
+
+#EXOSIMS-specific
+toy_star_list_102715v2.csv
+Nstars_V1.xlsx
+EXOCATXLS.py*
+ToyCat1.py*
+de432s.bsp
+fitting_parameters.h5
+*.comp
+*.so
+*.acomp
+statsFun_C
+*.p
+*.pkl

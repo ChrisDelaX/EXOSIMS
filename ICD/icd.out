@@ -10,62 +10,58 @@
 \BOOKMARK [2][-]{subsection.4.1}{Specification Format}{section.4}% 10
 \BOOKMARK [2][-]{subsection.4.2}{Modules Specification}{section.4}% 11
 \BOOKMARK [2][-]{subsection.4.3}{Universal Parameters}{section.4}% 12
-\BOOKMARK [1][-]{section.5}{Input Modules}{}% 13
-\BOOKMARK [2][-]{subsection.5.1}{Planet Population}{section.5}% 14
-\BOOKMARK [3][-]{subsubsection.5.1.1}{Planet Population Object Attribute Initialization Input/Output Description}{subsection.5.1}% 15
-\BOOKMARK [3][-]{subsubsection.5.1.2}{Planet Population Probability Density Functions}{subsection.5.1}% 16
-\BOOKMARK [2][-]{subsection.5.2}{Star Catalog}{section.5}% 17
-\BOOKMARK [3][-]{subsubsection.5.2.1}{Star Catalog Object Attribute Initialization Input/Output Description}{subsection.5.2}% 18
-\BOOKMARK [2][-]{subsection.5.3}{Optical System}{section.5}% 19
-\BOOKMARK [3][-]{subsubsection.5.3.1}{Optical System Object Attribute Initialization Input/Output Description}{subsection.5.3}% 20
-\BOOKMARK [3][-]{subsubsection.5.3.2}{calc\137maxintTime Method Input/Output Description}{subsection.5.3}% 21
-\BOOKMARK [3][-]{subsubsection.5.3.3}{calc\137intTime Method Input/Output Description}{subsection.5.3}% 22
-\BOOKMARK [2][-]{subsection.5.4}{Zodiacal Light}{section.5}% 23
-\BOOKMARK [3][-]{subsubsection.5.4.1}{Zodiacal Light Object Attribute Initialization Input/Output Description}{subsection.5.4}% 24
-\BOOKMARK [3][-]{subsubsection.5.4.2}{fzodi Method Input/Output Description}{subsection.5.4}% 25
-\BOOKMARK [2][-]{subsection.5.5}{Background Sources}{section.5}% 26
-\BOOKMARK [3][-]{subsubsection.5.5.1}{dNbackground}{subsection.5.5}% 27
-\BOOKMARK [2][-]{subsection.5.6}{Planet Physical Model}{section.5}% 28
-\BOOKMARK [2][-]{subsection.5.7}{Observatory}{section.5}% 29
-\BOOKMARK [3][-]{subsubsection.5.7.1}{Observatory Object Attribute Initialization Input/Output Description}{subsection.5.7}% 30
-\BOOKMARK [3][-]{subsubsection.5.7.2}{orbit Method Input/Output Description}{subsection.5.7}% 31
-\BOOKMARK [3][-]{subsubsection.5.7.3}{keepout Method Input/Output Description}{subsection.5.7}% 32
-\BOOKMARK [3][-]{subsubsection.5.7.4}{solarSystem\137body\137position Method}{subsection.5.7}% 33
-\BOOKMARK [2][-]{subsection.5.8}{Time Keeping}{section.5}% 34
-\BOOKMARK [3][-]{subsubsection.5.8.1}{Time Keeping Object Attribute Initialization Input/Output Description}{subsection.5.8}% 35
-\BOOKMARK [3][-]{subsubsection.5.8.2}{update\137times Method Input/Output Description}{subsection.5.8}% 36
-\BOOKMARK [3][-]{subsubsection.5.8.3}{duty\137cycle Method Input/Output Description}{subsection.5.8}% 37
-\BOOKMARK [2][-]{subsection.5.9}{Post-Processing}{section.5}% 38
-\BOOKMARK [3][-]{subsubsection.5.9.1}{Post-Processing Object Attribute Initialization Input/Output Description}{subsection.5.9}% 39
-\BOOKMARK [3][-]{subsubsection.5.9.2}{det\137occur Method Input/Output Description}{subsection.5.9}% 40
-\BOOKMARK [1][-]{section.6}{Simulation Modules}{}% 41
-\BOOKMARK [2][-]{subsection.6.1}{Completeness}{section.6}% 42
-\BOOKMARK [3][-]{subsubsection.6.1.1}{Completeness Object Attribute Initialization Input/Output Description}{subsection.6.1}% 43
-\BOOKMARK [3][-]{subsubsection.6.1.2}{target\137completeness Method Input/Output Description}{subsection.6.1}% 44
-\BOOKMARK [3][-]{subsubsection.6.1.3}{completeness\137update Method Input/Output Description}{subsection.6.1}% 45
-\BOOKMARK [2][-]{subsection.6.2}{Target List}{section.6}% 46
-\BOOKMARK [3][-]{subsubsection.6.2.1}{Target List Object Attribute Initialization Input/Output Description}{subsection.6.2}% 47
-\BOOKMARK [2][-]{subsection.6.3}{Simulated Universe}{section.6}% 48
-\BOOKMARK [3][-]{subsubsection.6.3.1}{Simulated Universe Object Attribute Initialization Input/Output Description}{subsection.6.3}% 49
-\BOOKMARK [3][-]{subsubsection.6.3.2}{planet\137to\137star Method Input/Output Description}{subsection.6.3}% 50
-\BOOKMARK [3][-]{subsubsection.6.3.3}{planet\137a Method Input/Output Description}{subsection.6.3}% 51
-\BOOKMARK [3][-]{subsubsection.6.3.4}{planet\137e Method Input/Output Description}{subsection.6.3}% 52
-\BOOKMARK [3][-]{subsubsection.6.3.5}{planet\137w Method Input/Output Description}{subsection.6.3}% 53
-\BOOKMARK [3][-]{subsubsection.6.3.6}{planet\137O Method Input/Output Description}{subsection.6.3}% 54
-\BOOKMARK [3][-]{subsubsection.6.3.7}{planet\137masses Method Input/Output Description}{subsection.6.3}% 55
-\BOOKMARK [3][-]{subsubsection.6.3.8}{planet\137radii Method Input/Output Description}{subsection.6.3}% 56
-\BOOKMARK [3][-]{subsubsection.6.3.9}{planet\137albedos Method Input/Output Description}{subsection.6.3}% 57
-\BOOKMARK [3][-]{subsubsection.6.3.10}{planet\137inclinations Method Input/Output Description}{subsection.6.3}% 58
-\BOOKMARK [3][-]{subsubsection.6.3.11}{planet\137pos\137vel Method Input/Output Description}{subsection.6.3}% 59
-\BOOKMARK [3][-]{subsubsection.6.3.12}{prop\137system Method Input/Output Description}{subsection.6.3}% 60
-\BOOKMARK [3][-]{subsubsection.6.3.13}{eccanom Method Input/Output Description}{subsection.6.3}% 61
-\BOOKMARK [3][-]{subsubsection.6.3.14}{get\137current\137WA Method Input/Output Description}{subsection.6.3}% 62
-\BOOKMARK [2][-]{subsection.6.4}{Survey Simulation}{section.6}% 63
-\BOOKMARK [3][-]{subsubsection.6.4.1}{Survey Simulation Object Attribute Initialization Input/Output Description}{subsection.6.4}% 64
-\BOOKMARK [3][-]{subsubsection.6.4.2}{run\137sim Method Input/Output Description}{subsection.6.4}% 65
-\BOOKMARK [3][-]{subsubsection.6.4.3}{initial\137target Sub-task Input/Output Description}{subsection.6.4}% 66
-\BOOKMARK [3][-]{subsubsection.6.4.4}{observation\137detection Sub-task Input/Output Description}{subsection.6.4}% 67
-\BOOKMARK [3][-]{subsubsection.6.4.5}{det\137data Sub-task Input/Output Description}{subsection.6.4}% 68
-\BOOKMARK [3][-]{subsubsection.6.4.6}{observation\137characterization Sub-task Input/Output Description}{subsection.6.4}% 69
-\BOOKMARK [3][-]{subsubsection.6.4.7}{next\137target Sub-task Input/Output Description}{subsection.6.4}% 70
-\BOOKMARK [2][-]{subsection.6.5}{Survey Ensemble}{section.6}% 71
+\BOOKMARK [1][-]{section.5}{Module Specifications}{}% 13
+\BOOKMARK [2][-]{subsection.5.1}{Star Catalog}{section.5}% 14
+\BOOKMARK [3][-]{subsubsection.5.1.1}{Star Catalog Object Attribute Initialization}{subsection.5.1}% 15
+\BOOKMARK [2][-]{subsection.5.2}{Planet Population}{section.5}% 16
+\BOOKMARK [3][-]{subsubsection.5.2.1}{Planet Population Object Attribute Initialization}{subsection.5.2}% 17
+\BOOKMARK [3][-]{subsubsection.5.2.2}{Planet Population Value Generators}{subsection.5.2}% 18
+\BOOKMARK [2][-]{subsection.5.3}{Planet Physical Model}{section.5}% 19
+\BOOKMARK [2][-]{subsection.5.4}{Optical System}{section.5}% 20
+\BOOKMARK [3][-]{subsubsection.5.4.1}{Optical System Object Attribute Initialization}{subsection.5.4}% 21
+\BOOKMARK [3][-]{subsubsection.5.4.2}{calc\137maxintTime Method}{subsection.5.4}% 22
+\BOOKMARK [3][-]{subsubsection.5.4.3}{calc\137intTime Method}{subsection.5.4}% 23
+\BOOKMARK [3][-]{subsubsection.5.4.4}{Cp\137Cb\137Csp Method}{subsection.5.4}% 24
+\BOOKMARK [2][-]{subsection.5.5}{Zodiacal Light}{section.5}% 25
+\BOOKMARK [3][-]{subsubsection.5.5.1}{Zodiacal Light Object Attribute Initialization}{subsection.5.5}% 26
+\BOOKMARK [3][-]{subsubsection.5.5.2}{fZ Method}{subsection.5.5}% 27
+\BOOKMARK [3][-]{subsubsection.5.5.3}{fEZ Method}{subsection.5.5}% 28
+\BOOKMARK [2][-]{subsection.5.6}{Background Sources}{section.5}% 29
+\BOOKMARK [3][-]{subsubsection.5.6.1}{dNbackground Method}{subsection.5.6}% 30
+\BOOKMARK [2][-]{subsection.5.7}{Post-Processing}{section.5}% 31
+\BOOKMARK [3][-]{subsubsection.5.7.1}{Post-Processing Object Attribute Initialization}{subsection.5.7}% 32
+\BOOKMARK [3][-]{subsubsection.5.7.2}{det\137occur Method}{subsection.5.7}% 33
+\BOOKMARK [2][-]{subsection.5.8}{Completeness}{section.5}% 34
+\BOOKMARK [3][-]{subsubsection.5.8.1}{Completeness Object Attribute Initialization}{subsection.5.8}% 35
+\BOOKMARK [3][-]{subsubsection.5.8.2}{target\137completeness Method}{subsection.5.8}% 36
+\BOOKMARK [3][-]{subsubsection.5.8.3}{gen\137update Method}{subsection.5.8}% 37
+\BOOKMARK [3][-]{subsubsection.5.8.4}{completeness\137update Method}{subsection.5.8}% 38
+\BOOKMARK [2][-]{subsection.5.9}{Target List}{section.5}% 39
+\BOOKMARK [3][-]{subsubsection.5.9.1}{Target List Object Attribute Initialization}{subsection.5.9}% 40
+\BOOKMARK [3][-]{subsubsection.5.9.2}{starMag Method}{subsection.5.9}% 41
+\BOOKMARK [3][-]{subsubsection.5.9.3}{populate\137target\137list Method}{subsection.5.9}% 42
+\BOOKMARK [3][-]{subsubsection.5.9.4}{filter\137target\137list Method}{subsection.5.9}% 43
+\BOOKMARK [3][-]{subsubsection.5.9.5}{Target List Filtering Helper Methods}{subsection.5.9}% 44
+\BOOKMARK [2][-]{subsection.5.10}{Simulated Universe}{section.5}% 45
+\BOOKMARK [3][-]{subsubsection.5.10.1}{Attributes}{subsection.5.10}% 46
+\BOOKMARK [3][-]{subsubsection.5.10.2}{gen\137physical\137properties Method}{subsection.5.10}% 47
+\BOOKMARK [3][-]{subsubsection.5.10.3}{init\137systems Method}{subsection.5.10}% 48
+\BOOKMARK [3][-]{subsubsection.5.10.4}{propag\137system Method}{subsection.5.10}% 49
+\BOOKMARK [2][-]{subsection.5.11}{Observatory}{section.5}% 50
+\BOOKMARK [3][-]{subsubsection.5.11.1}{Observatory Object Attribute Initialization}{subsection.5.11}% 51
+\BOOKMARK [3][-]{subsubsection.5.11.2}{orbit Method}{subsection.5.11}% 52
+\BOOKMARK [3][-]{subsubsection.5.11.3}{keepout Method}{subsection.5.11}% 53
+\BOOKMARK [3][-]{subsubsection.5.11.4}{solarSystem\137body\137position Method}{subsection.5.11}% 54
+\BOOKMARK [2][-]{subsection.5.12}{Time Keeping}{section.5}% 55
+\BOOKMARK [3][-]{subsubsection.5.12.1}{Time Keeping Object Attribute Initialization}{subsection.5.12}% 56
+\BOOKMARK [3][-]{subsubsection.5.12.2}{allocate\137time Method}{subsection.5.12}% 57
+\BOOKMARK [3][-]{subsubsection.5.12.3}{mission\137is\137over Method}{subsection.5.12}% 58
+\BOOKMARK [2][-]{subsection.5.13}{Survey Simulation}{section.5}% 59
+\BOOKMARK [3][-]{subsubsection.5.13.1}{Survey Simulation Object Attribute Initialization}{subsection.5.13}% 60
+\BOOKMARK [3][-]{subsubsection.5.13.2}{run\137sim Method}{subsection.5.13}% 61
+\BOOKMARK [3][-]{subsubsection.5.13.3}{next\137target Method}{subsection.5.13}% 62
+\BOOKMARK [3][-]{subsubsection.5.13.4}{observation\137detection Method}{subsection.5.13}% 63
+\BOOKMARK [3][-]{subsubsection.5.13.5}{observation\137characterization Method}{subsection.5.13}% 64
+\BOOKMARK [3][-]{subsubsection.5.13.6}{calc\137signal\137noise Method}{subsection.5.13}% 65
+\BOOKMARK [3][-]{subsubsection.5.13.7}{update\137occulter\137mass Method}{subsection.5.13}% 66
+\BOOKMARK [2][-]{subsection.5.14}{Survey Ensemble}{section.5}% 67
